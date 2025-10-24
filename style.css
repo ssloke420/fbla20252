@@ -1,0 +1,172 @@
+
+
+:root {
+  --primary-blue: #003366;   /* Dark Blue */
+  --secondary-yellow: #FFD700; /* School Yellow (Gold-ish) */
+  --light-blue: #e6f0ff;
+  --light-yellow: #fff8e1;
+  --text-dark: #222;
+  --text-light: #fff;
+}
+
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: var(--light-blue);
+  color: var(--text-dark);
+  line-height: 1.6;
+}
+
+header {
+  background: var(--primary-blue);
+  color: var(--text-light);
+  padding: 1em;
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+header h1 {
+  margin-bottom: 0.5em;
+}
+nav {
+  background-color: blue;
+}
+nav ul {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  gap: 1em;
+}
+
+nav a {
+  text-decoration: none;
+  color: var(--secondary-yellow);
+  font-weight: bold;
+  transition: color 0.2s ease;
+}
+
+nav a:hover {
+  color: var(--text-light);
+  cursor: pointer;
+}
+
+.navigation {
+  background-color: blue;
+}
+
+.navigation ul {
+    list-style: none;
+  display: flex;
+  justify-content: center;
+  gap: 1em;
+}
+
+.navigation a {
+    text-decoration: none;
+  color: var(--secondary-yellow);
+  font-weight: bold;
+  transition: color 0.2s ease;
+}
+
+.navigation a:hover {
+   color: var(--text-light);
+   cursor: pointer;
+}
+
+/* Sections */
+main {
+  max-width: 900px;
+  margin: 2em auto;
+  padding: 0 1em;
+}
+
+section {
+  background: var(--light-yellow);
+  padding: 1.5em;
+  margin-bottom: 2em;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+section h2 {
+  color: var(--primary-blue);
+  margin-bottom: 1em;
+}
+
+/* Forms */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+input, textarea, select {
+  padding: 0.7em;
+  border: 2px solid var(--primary-blue);
+  border-radius: 6px;
+  font-size: 1em;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+input:focus, textarea:focus, select:focus {
+  outline: none;
+  border-color: var(--secondary-yellow);
+  box-shadow: 0 0 5px var(--secondary-yellow);
+}
+
+/* Buttons */
+button {
+  padding: 0.7em 1.2em;
+  border: none;
+  border-radius: 6px;
+  background: var(--primary-blue);
+  color: var(--text-light);
+  font-size: 1em;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+
+button:hover {
+  background: var(--secondary-yellow);
+  color: var(--primary-blue);
+}
+
+button:active {
+  transform: scale(0.97);
+}
+
+/* Lists (for lost/found items) */
+#item-list {
+  list-style: none;
+  padding: 0;
+}
+
+#item-list li {
+  background: white;
+  border: 1px solid var(--primary-blue);
+  padding: 0.8em;
+  margin-bottom: 0.5em;
+  border-radius: 6px;
+}
+
+.bg-blue {
+  background: var(--primary-blue);
+  color: var(--text-light);
+}
+
+.bg-yellow {
+  background: var(--secondary-yellow);
+  color: var(--primary-blue);
+}
+
+.hidden {
+  display: none;
+}
+
