@@ -3,35 +3,34 @@
   <head>
     <link rel="stylesheet" href="style.css"/>
     <title>RHHS Lost and Found Website</title>
-     <link rel="icon" type="image/svg+xml" href="images/rhhs_logo.svg">
-     <style>
+    <link rel="icon" type="image/svg+xml" href="images/rhhs_logo.svg">
+    <style>
       form {
-      display: grid;
-     grid-template-columns: 1fr 1fr; /* Two equal-width columns */
-     gap: 15px; /* Space between grid items */
-     margin: 20px auto; 
-      float: left;
-        align: left;
-      margin-left: 25px; 
-      
-    }
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+        margin: 20px auto;
+        float: left;
+        margin-left: 25px;
+      }
 
-    form label,
-    form input {
-     display: block;
-     width: 100%;
-    }
+      form label,
+      form input {
+        display: block;
+        width: 100%;
+      }
+
       #form-submit {
         position: absolute;
         top: 26%;
         right: 10%;
       }
-     </style>
+    </style>
   </head>
+
   <body>
-    <script src="script.js"></script>
     <header> 
-      <h1  id="header">RHHS Lost and Found Website</h1> 
+      <h1 id="header">RHHS Lost and Found Website</h1> 
     </header>
     <nav>
       <ul>
@@ -41,27 +40,27 @@
         <li><a href="login.html">Admin Login</a></li>
       </ul>
     </nav>
-    <!-- <button onclick="test()">test</button> <p id="test"></p> -->
+
     <div>
-    <form style="width: 75%">
-      Item Title: <input type="text">
-      Item Description: <input type="text">
-      Picture (Clearly show item, should be easily distinguishable): <input type="file">
-      Where to Find (Contact Information, Location, etc.) : <input type="text">
-    </form>
-    <button id="form-submit">Submit</button>
-  </div>
-    
-    <table>
+      <form id="item-form" style="width: 75%">
+        Item Title: <input type="text" id="item-title">
+        Item Description: <input type="text" id="item-desc">
+        Picture (Clearly show item, should be easily distinguishable): <input type="file" id="item-pic">
+        Where to Find (Contact Information, Location, etc.): <input type="text" id="item-location">
+      </form>
+      <button id="form-submit">Submit</button>
+    </div>
+
+    <table id="item-table">
       <tr>
-      <th>Item Title</th>
-      <th>Item Description</th>
-      <th>Picture</th>
-      <th>Where to Find</th>
+        <th>Item Title</th>
+        <th>Item Description</th>
+        <th>Picture</th>
+        <th>Where to Find</th>
       </tr>
     </table>
+
     <script>
-      
       const form = document.getElementById("item-form");
       const submitBtn = document.getElementById("form-submit");
       const table = document.getElementById("item-table");
@@ -73,7 +72,8 @@
       };
 
       // Handle form submission
-      submitBtn.addEventListener("click", async () => {
+      submitBtn.addEventListener("click", async (e) => {
+        e.preventDefault(); // Prevent page reload
         const title = document.getElementById("item-title").value.trim();
         const desc = document.getElementById("item-desc").value.trim();
         const fileInput = document.getElementById("item-pic");
@@ -94,10 +94,9 @@
         addRowToTable(newItem);
         saveToLocalStorage(newItem);
 
-        form.reset(); // Clear form fields
+        form.reset();
       });
 
-      // Convert uploaded file to Base64 string
       function toBase64(file) {
         return new Promise((resolve, reject) => {
           const reader = new FileReader();
@@ -107,7 +106,6 @@
         });
       }
 
-      // Add new row to table
       function addRowToTable(item) {
         const newRow = table.insertRow(-1);
         const titleCell = newRow.insertCell(0);
@@ -123,30 +121,18 @@
           const img = document.createElement("img");
           img.src = item.imageData;
           img.className = "preview";
+          img.style.width = "100px";
           picCell.appendChild(img);
         } else {
           picCell.textContent = "No image";
         }
       }
 
-      // Save new item to localStorage
       function saveToLocalStorage(item) {
         const existingItems = JSON.parse(localStorage.getItem("lostAndFoundItems")) || [];
         existingItems.push(item);
         localStorage.setItem("lostAndFoundItems", JSON.stringify(existingItems));
       }
     </script>
-    <!---Skill--->
   </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
