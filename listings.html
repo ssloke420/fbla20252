@@ -15,7 +15,8 @@
       }
 
       form label,
-      form input {
+      form input,
+      form select {
         display: block;
         width: 100%;
       }
@@ -24,6 +25,27 @@
         position: absolute;
         top: 26%;
         right: 10%;
+      }
+
+      table {
+        width: 90%;
+        border-collapse: collapse;
+        margin: 40px auto;
+      }
+
+      th, td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: center;
+      }
+
+      th {
+        background-color: #f2f2f2;
+      }
+
+      img.preview {
+        width: 100px;
+        height: auto;
       }
     </style>
   </head>
@@ -43,11 +65,25 @@
 
     <div>
       <form id="item-form" style="width: 75%">
-        Item Title: <input type="text" id="item-title">
-        Item Description: <input type="text" id="item-desc">
-        Picture (Clearly show item, should be easily distinguishable): <input type="file" id="item-pic">
-        Where to Find (Contact Information, Location, etc.): <input type="text" id="item-location">
+        <label>Item Title:</label>
+        <input type="text" id="item-title">
+
+        <label>Item Description:</label>
+        <input type="text" id="item-desc">
+
+        <label>Picture (Clearly show item, should be easily distinguishable):</label>
+        <input type="file" id="item-pic">
+
+        <label>Where to Find (Contact Information, Location, etc.):</label>
+        <input type="text" id="item-location">
+
+        <label>Type of Post:</label>
+        <select id="item-type">
+          <option value="I found this">I found this</option>
+          <option value="I am looking for this">I am looking for this</option>
+        </select>
       </form>
+
       <button id="form-submit">Submit</button>
     </div>
 
@@ -57,6 +93,7 @@
         <th>Item Description</th>
         <th>Picture</th>
         <th>Where to Find</th>
+        <th>Type</th>
       </tr>
     </table>
 
@@ -78,6 +115,7 @@
         const desc = document.getElementById("item-desc").value.trim();
         const fileInput = document.getElementById("item-pic");
         const location = document.getElementById("item-location").value.trim();
+        const type = document.getElementById("item-type").value;
 
         if (!title || !desc || !location) {
           alert("Please fill out all required fields.");
@@ -89,7 +127,7 @@
           imageData = await toBase64(fileInput.files[0]);
         }
 
-        const newItem = { title, desc, imageData, location };
+        const newItem = { title, desc, imageData, location, type };
 
         addRowToTable(newItem);
         saveToLocalStorage(newItem);
@@ -112,16 +150,17 @@
         const descCell = newRow.insertCell(1);
         const picCell = newRow.insertCell(2);
         const locationCell = newRow.insertCell(3);
+        const typeCell = newRow.insertCell(4);
 
         titleCell.textContent = item.title;
         descCell.textContent = item.desc;
         locationCell.textContent = item.location;
+        typeCell.textContent = item.type;
 
         if (item.imageData) {
           const img = document.createElement("img");
           img.src = item.imageData;
           img.className = "preview";
-          img.style.width = "100px";
           picCell.appendChild(img);
         } else {
           picCell.textContent = "No image";
