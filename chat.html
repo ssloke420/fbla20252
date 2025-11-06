@@ -4,21 +4,30 @@
     <title>RHHS Lost & Found Chat</title>
     <style rel="stylesheet" href="style.css"></style>
     <style>
+ 
+ --primary-blue: #003366;   /* Dark Blue */
+  --secondary-yellow: #FFD700; /* School Yellow (Gold-ish) */
+  --light-blue: #e6f0ff;
+  --light-yellow: #fff8e1;
+  --text-dark: #222;
+  --text-light: #fff;
         body {
-            background-color: (#e6f0ff);
-            color: (#fff);
+            background-color: #e6f0ff;
+            color: #222;
             text-align: center;
             font-family: "Segoe UI", Arial, sans-serif;
             margin: 0;
-            padding-bottom: 100px; */
+            padding-bottom: 100px; 
+            line-height: 1.6;
         }
 
         h1 {
             background-color: #003366;
-            color: #ffd700;
+            color: #fff;
             margin: 0;
-            padding: 15px;
+            padding: 1em;
             text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
 
         cite {
@@ -127,10 +136,23 @@
 
 </head>
 <body>
-    <h1>RHHS Lost and Found Chat</h1>
+       <header> 
+      <h1 id="header">RHHS Lost and Found Website</h1> 
+    </header>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="listings.html">Create New Listing/Browse Found Items</a></li>
+        <li><a href="chat.html">Discuss Lost Items</a></li>
+        <li><a href="login.html">Admin Login</a></li>
+      </ul>
+    </nav>
+    <div style="text-align: center; padding-right: 30px; padding-left: 30px;">
+      <img src="images/hawks_logo.png" alt="hawks_logo" style="text-align: center;"/>
+    <!-- <h1>RHHS Lost and Found Chat</h1>
     <cite>Use this chat to discuss or help identify lost and found items. Please be respectful.</cite>
     <button style=" background-color:  #003366; margin-right: 45%; margin-left: 45%; width: 10%;"><a href="index.html" style="color: yellow;">Back To Site</a></button>
-    <hr>
+    <hr> -->
 
     <div id="messages"></div>
     <div id="typingIndicator"></div>
@@ -283,4 +305,5 @@
     </script>
 </body>
 </html>
+
 
