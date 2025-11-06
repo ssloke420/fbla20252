@@ -4,6 +4,21 @@
     <link rel="stylesheet" href="style.css"/>
     <title>RHHS Lost and Found Website</title>
      <link rel="icon" type="image/svg+xml" href="images/rhhs_logo.svg">
+     <style>
+      form {
+      display: grid;
+     grid-template-columns: 1fr 1fr; /* Two equal-width columns */
+     gap: 15px; /* Space between grid items */
+     max-width: 600px; /* Optional: keeps it from stretching too wide */
+     margin: 20px auto; /* Centers the form */
+    }
+
+    form label,
+    form input {
+     display: block;
+     width: 100%;
+    }
+     </style>
   </head>
   <body>
     <script src="script.js"></script>
@@ -18,14 +33,15 @@
         <li><a href="login.html">Admin Login</a></li>
       </ul>
     </nav>
-    <button onclick="test()">test</button>
-    <p id="test"></p>
+    <!-- <button onclick="test()">test</button>
+    <p id="test"></p> -->
     <form>
-      <input type="text">
-      <input type="textarea">
-      <input type="text">
-      <input type="text">
+      Item Title: <input type="text">
+      Item Description: <input type="textarea">
+      Picture: <input type="text">
+      Where to Find: <input type="text">
     </form>
+    
     <table>
       <tr>
       <th>Item Title</th>
