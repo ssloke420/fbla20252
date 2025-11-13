@@ -1,1 +1,31 @@
+  
+      form {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+        margin: 20px auto;
+        float: left;
+        margin-left: 25px;
+      }
+
+      form label,
+      form input,
+      form select {
+        display: block;
+        width: 100%;
+      }
+
+      #form-submit {
+        position: absolute;
+        top: 26%;
+        right: 10%;
+      }
+
+
+
+      img.preview {
+        width: 100px;
+        height: auto;
+      }
+
 
