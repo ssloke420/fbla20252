@@ -114,3 +114,5 @@ function deleteItem(id) {
   items = items.filter(item => item.id !== id);
   localStorage.setItem("lostAndFoundItems", JSON.stringify(items));
 }
+
+// JEMMA JUNE NOVEMBER 25
