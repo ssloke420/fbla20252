@@ -13,41 +13,32 @@ window.onload = function () {
 // --------------------------
 // SUBMIT FORM
 // --------------------------
-submitBtn.addEventListener("click", async (e) => {
-  e.preventDefault();
+      // Handle form submission
+      submitBtn.addEventListener("click", async (e) => {
+        e.preventDefault(); // Prevent page reload
+        const title = document.getElementById("item-title").value.trim();
+        const desc = document.getElementById("item-desc").value.trim();
+        const fileInput = document.getElementById("item-pic");
+        const location = document.getElementById("item-location").value.trim();
+        const type = document.getElementById("item-type").value;
 
-  const title = document.getElementById("item-title").value.trim();
-  const desc = document.getElementById("item-desc").value.trim();
-  const fileInput = document.getElementById("item-pic");
-  const location = document.getElementById("item-location").value.trim();
-  const type = document.getElementById("item-type").value;
+        if (!title || !desc || !location) {
+          alert("Please fill out all required fields.");
+          return;
+        }
 
-  if (!title || !desc || !location) {
-    alert("Please fill out all required fields.");
-    return;
-  }
+        let imageData = "";
+        if (fileInput.files && fileInput.files[0]) {
+          imageData = await toBase64(fileInput.files[0]);
+        }
 
-  let imageData = "";
-  if (fileInput.files && fileInput.files[0]) {
-    imageData = await toBase64(fileInput.files[0]);
-  }
+        const newItem = { title, desc, imageData, location, type };
 
-  // Create new item WITH ID
-  const newItem = {
-    id: Date.now(),
-    title,
-    desc,
-    imageData,
-    location,
-    type
-  };
+        addRowToTable(newItem);
+        saveToLocalStorage(newItem);
 
-  addRowToTable(newItem);
-  saveToLocalStorage(newItem);
-
-  form.reset();
-});
-
+        form.reset();
+      });
 // Convert image to Base64
 function toBase64(file) {
   return new Promise((resolve, reject) => {
