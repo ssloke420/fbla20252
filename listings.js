@@ -66,8 +66,7 @@
           picCell.textContent = "No image";
         }
 
-            const myInput = document.getElementById('myInputID');
-            myInput.addEventListener('dblclick',function(event)) {
+            newRow.addEventListener('dblclick',function(event)) {
                   if (sessionStorage.getItem("isadmin", "true")) {
 
                   }
