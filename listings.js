@@ -1,91 +1,116 @@
-      const form = document.getElementById("item-form");
-      const submitBtn = document.getElementById("form-submit");
-      const table = document.getElementById("item-table");
+const form = document.getElementById("item-form");
+const submitBtn = document.getElementById("form-submit");
+const table = document.getElementById("item-table");
 
-      // Load saved data from localStorage when the page loads
-      window.onload = function() {
-        const savedItems = JSON.parse(localStorage.getItem("lostAndFoundItems")) || [];
-        savedItems.forEach(item => addRowToTable(item));
-      };
+// --------------------------
+// LOAD SAVED ITEMS ON START
+// --------------------------
+window.onload = function () {
+  const savedItems = JSON.parse(localStorage.getItem("lostAndFoundItems")) || [];
+  savedItems.forEach(item => addRowToTable(item));
+};
 
-      // Handle form submission
-      submitBtn.addEventListener("click", async (e) => {
-        e.preventDefault(); // Prevent page reload
-        const title = document.getElementById("item-title").value.trim();
-        const desc = document.getElementById("item-desc").value.trim();
-        const fileInput = document.getElementById("item-pic");
-        const location = document.getElementById("item-location").value.trim();
-        const type = document.getElementById("item-type").value;
+// --------------------------
+// SUBMIT FORM
+// --------------------------
+submitBtn.addEventListener("click", async (e) => {
+  e.preventDefault();
 
-        if (!title || !desc || !location) {
-          alert("Please fill out all required fields.");
-          return;
-        }
+  const title = document.getElementById("item-title").value.trim();
+  const desc = document.getElementById("item-desc").value.trim();
+  const fileInput = document.getElementById("item-pic");
+  const location = document.getElementById("item-location").value.trim();
+  const type = document.getElementById("item-type").value;
 
-        let imageData = "";
-        if (fileInput.files && fileInput.files[0]) {
-          imageData = await toBase64(fileInput.files[0]);
-        }
-
-        const newItem = { title, desc, imageData, location, type };
-
-        addRowToTable(newItem);
-        saveToLocalStorage(newItem);
-
-        form.reset();
-      });
-
-      function toBase64(file) {
-        return new Promise((resolve, reject) => {
-          const reader = new FileReader();
-          reader.readAsDataURL(file);
-          reader.onload = () => resolve(reader.result);
-          reader.onerror = error => reject(error);
-        });
-      }
-
-      function addRowToTable(item) {
-        const newRow = table.insertRow(-1);
-        const titleCell = newRow.insertCell(0);
-        const descCell = newRow.insertCell(1);
-        const picCell = newRow.insertCell(2);
-        const locationCell = newRow.insertCell(3);
-        const typeCell = newRow.insertCell(4);
-
-        titleCell.textContent = item.title;
-        descCell.textContent = item.desc;
-        locationCell.textContent = item.location;
-        typeCell.textContent = item.type;
-
-        if (item.imageData) {
-          const img = document.createElement("img");
-          img.src = item.imageData;
-          img.className = "preview";
-          picCell.appendChild(img);
-        } else {
-          picCell.textContent = "No image";
-        }
-
-      newRow.addEventListener('dblclick',function(event) {
-             if (sessionStorage.getItem("isadmin", "true")) {
-                const confirmDelete = confirm("Delete this item from Lost & Found?");
-                if (!confirmDelete) return;
-                deleteItem(item.id);
-               newRow.remove();
-          }
-      });
+  if (!title || !desc || !location) {
+    alert("Please fill out all required fields.");
+    return;
   }
-      function saveToLocalStorage(item) {
-        const existingItems = JSON.parse(localStorage.getItem("lostAndFoundItems")) || [];
-        item.id = Date.now();
-        existingItems.push(item);
-        localStorage.setItem("lostAndFoundItems", JSON.stringify(existingItems));
-      }
-function deleteItem(id) {
-  let existingItems = JSON.parse(localStorage.getItem("lostAndFoundItems")) || [];
 
-  existingItems = existingItems.filter(item => item.id !== id);
+  let imageData = "";
+  if (fileInput.files && fileInput.files[0]) {
+    imageData = await toBase64(fileInput.files[0]);
+  }
 
+  // Create new item WITH ID
+  const newItem = {
+    id: Date.now(),
+    title,
+    desc,
+    imageData,
+    location,
+    type
+  };
+
+  addRowToTable(newItem);
+  saveToLocalStorage(newItem);
+
+  form.reset();
+});
+
+// Convert image to Base64
+function toBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = error => reject(error);
+  });
+}
+
+// --------------------------
+// ADD ROW TO TABLE
+// --------------------------
+function addRowToTable(item) {
+  const newRow = table.insertRow(-1);
+  newRow.dataset.id = item.id;
+
+  const titleCell = newRow.insertCell(0);
+  const descCell = newRow.insertCell(1);
+  const picCell = newRow.insertCell(2);
+  const locationCell = newRow.insertCell(3);
+  const typeCell = newRow.insertCell(4);
+
+  titleCell.textContent = item.title;
+  descCell.textContent = item.desc;
+  locationCell.textContent = item.location;
+  typeCell.textContent = item.type;
+
+  if (item.imageData) {
+    const img = document.createElement("img");
+    img.src = item.imageData;
+    img.className = "preview";
+    picCell.appendChild(img);
+  } else {
+    picCell.textContent = "No image";
+  }
+
+  // ------- DOUBLE CLICK DELETE (ADMIN ONLY) -------
+  newRow.addEventListener("dblclick", function () {
+    if (sessionStorage.getItem("isadmin") === "true") {
+      const confirmDelete = confirm("Delete this item from Lost & Found?");
+      if (!confirmDelete) return;
+
+      deleteItem(item.id);
+      newRow.remove();
+    }
+  });
+}
+
+// --------------------------
+// SAVE TO LOCAL STORAGE
+// --------------------------
+function saveToLocalStorage(item) {
+  const existingItems = JSON.parse(localStorage.getItem("lostAndFoundItems")) || [];
+  existingItems.push(item);
   localStorage.setItem("lostAndFoundItems", JSON.stringify(existingItems));
 }
 
+// --------------------------
+// DELETE FROM LOCAL STORAGE
+// --------------------------
+function deleteItem(id) {
+  let items = JSON.parse(localStorage.getItem("lostAndFoundItems")) || [];
+  items = items.filter(item => item.id !== id);
+  localStorage.setItem("lostAndFoundItems", JSON.stringify(items));
+}
