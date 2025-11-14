@@ -66,15 +66,26 @@
           picCell.textContent = "No image";
         }
 
-            newRow.addEventListener('dblclick',function(event)) {
-                  if (sessionStorage.getItem("isadmin", "true")) {
-
-                  }
-      }
-
+      newRow.addEventListener('dblclick',function(event) {
+             if (sessionStorage.getItem("isadmin", "true")) {
+                const confirmDelete = confirm("Delete this item from Lost & Found?");
+                if (!confirmDelete) return;
+                deleteItem(item.id);
+               newRow.remove();
+          }
+      });
+  }
       function saveToLocalStorage(item) {
         const existingItems = JSON.parse(localStorage.getItem("lostAndFoundItems")) || [];
         item.id = Date.now();
         existingItems.push(item);
         localStorage.setItem("lostAndFoundItems", JSON.stringify(existingItems));
       }
+function deleteItem(id) {
+  let existingItems = JSON.parse(localStorage.getItem("lostAndFoundItems")) || [];
+
+  existingItems = existingItems.filter(item => item.id !== id);
+
+  localStorage.setItem("lostAndFoundItems", JSON.stringify(existingItems));
+}
+
