@@ -69,6 +69,7 @@
 
       function saveToLocalStorage(item) {
         const existingItems = JSON.parse(localStorage.getItem("lostAndFoundItems")) || [];
+        item.id = Date.now();
         existingItems.push(item);
         localStorage.setItem("lostAndFoundItems", JSON.stringify(existingItems));
       }
