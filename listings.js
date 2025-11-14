@@ -85,6 +85,7 @@ function addRowToTable(item) {
 
   // ------- DOUBLE CLICK DELETE (ADMIN ONLY) -------
   newRow.addEventListener("click", function (e) {
+    e.stopPropagation();
     console.log("skibid")
     console.log(sessionStorage.getItem("isAdmin") )
     if (sessionStorage.getItem("isAdmin") === "true") {
