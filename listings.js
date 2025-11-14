@@ -85,7 +85,9 @@ function addRowToTable(item) {
 
   // ------- DOUBLE CLICK DELETE (ADMIN ONLY) -------
   newRow.addEventListener("dblclick", function () {
+    console.log("skibid")
     if (sessionStorage.getItem("isadmin") === "true") {
+      console.log("sigma")
       const confirmDelete = confirm("Delete this item from Lost & Found?");
       if (!confirmDelete) return;
 
