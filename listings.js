@@ -84,7 +84,7 @@ function addRowToTable(item) {
   }
 
   // ------- DOUBLE CLICK DELETE (ADMIN ONLY) -------
-  newRow.addEventListener("dblclick", function () {
+  newRow.addEventListener("click", function (e) {
     console.log("skibid")
     if (sessionStorage.getItem("isadmin") === "true") {
       console.log("sigma")
