@@ -48,6 +48,7 @@ nav a {
   color: var(--secondary-yellow);
   font-weight: bold;
   transition: color 0.2s ease;
+  font-size: 20px; 
 }
 
 nav a:hover {
