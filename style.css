@@ -56,48 +56,6 @@ nav a:hover {
   cursor: pointer;
 }
 
-.navigation {
-  background-color: blue;
-}
-
-.navigation ul {
-  list-style: none;
-  display: flex;
-  justify-content: center;
-  gap: 1em;
-}
-
-.navigation a {
-  text-decoration: none;
-  color: var(--secondary-yellow);
-  font-weight: bold;
-  transition: color 0.2s ease;
-}
-
-.navigation a:hover {
-  color: var(--text-light);
-  cursor: pointer;
-}
-
-/* Sections */
-main {
-  max-width: 900px;
-  margin: 2em auto;
-  padding: 0 1em;
-}
-
-section {
-  background: var(--light-yellow);
-  padding: 1.5em;
-  margin-bottom: 2em;
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-}
-
-section h2 {
-  color: var(--primary-blue);
-  margin-bottom: 1em;
-}
 
 /* Forms */
 form {
