@@ -78,10 +78,24 @@ function loadMessages() {
     const chatMessages = document.getElementById('messages');
     const savedMessages = JSON.parse(localStorage.getItem('chatMessages')) || [];
     chatMessages.innerHTML = '';
-    savedMessages.forEach(message => {
-        const messageElement = document.createElement('p');
-        messageElement.innerHTML = message;
-        chatMessages.appendChild(messageElement);
+    savedMessages.forEach(messageHTML => {
+        const messageContainer = document.createElement('div');
+        messageContainer.classList.add('message-container');
+        messageContainer.innerHTML = messageHTML;
+        
+        // Re-attach click handler for admin
+        if (isAdmin) {
+            messageContainer.style.cursor = 'pointer';
+            messageContainer.addEventListener("click", function(e) {
+                e.stopPropagation();
+                if (confirm('Are you sure you want to delete this message?')) {
+                    messageContainer.remove();
+                    saveMessages();
+                }
+            });
+        }
+        
+        chatMessages.appendChild(messageContainer);
     });
 }
 
@@ -101,40 +115,39 @@ document.addEventListener('DOMContentLoaded', () => {
     loadMessages();
     resetMessages();
     setInterval(resetMessages, 60 * 60 * 1000);
-});
-
-document.getElementById('chat').addEventListener('keydown', function(event) {
-    if (event.key === 'Enter') {
-        const message = document.getElementById('chat').value.trim();
-        const username = document.getElementById('username').value.trim();
-        if (message && username) {
-            if (isAdmin && message.startsWith('/ban ')) {
-                const userToBan = message.substring(5).trim();
-                activeUsers.delete(userToBan);
-                updateUserList();
-                addMessage(`User '${userToBan}' has been banned by Admin.`, 'Admin');
+    
+    document.getElementById('chat').addEventListener('keydown', function(event) {
+        if (event.key === 'Enter') {
+            const message = document.getElementById('chat').value.trim();
+            const username = document.getElementById('username').value.trim();
+            if (message && username) {
+                if (isAdmin && message.startsWith('/ban ')) {
+                    const userToBan = message.substring(5).trim();
+                    activeUsers.delete(userToBan);
+                    updateUserList();
+                    addMessage(`User '${userToBan}' has been banned by Admin.`, 'Admin');
+                } else {
+                    addMessage(message, username);
+                }
+                document.getElementById('chat').value = '';
             } else {
-                addMessage(message, username);
+                alert("Please enter both your name and a message.");
             }
-            document.getElementById('chat').value = '';
         } else {
-            alert("Please enter both your name and a message.");
+            const username = document.getElementById('username').value.trim();
+            if (username) showTypingIndicator(username);
         }
-    } else {
+    });
+
+    document.getElementById('username').addEventListener('blur', function() {
         const username = document.getElementById('username').value.trim();
-        if (username) showTypingIndicator(username);
-    }
-});
+        if (username) {
+            addUser(username);
+        }
+    });
 
-document.getElementById('username').addEventListener('blur', function() {
-    const username = document.getElementById('username').value.trim();
-    if (username) {
-        addUser(username);
-        checkAdmin(username);
-    }
-});
-
-document.getElementById('username').addEventListener('focus', function() {
-    const username = document.getElementById('username').value.trim();
-    if (username) removeUser(username);
+    document.getElementById('username').addEventListener('focus', function() {
+        const username = document.getElementById('username').value.trim();
+        if (username) removeUser(username);
+    });
 });
