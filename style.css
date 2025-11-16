@@ -1,10 +1,10 @@
 :root {
   --primary-blue: #003366;   /* Dark Blue */
   --secondary-yellow: #FFD700; /* School Yellow (Gold-ish) */
-  --light-blue: #e6f0ff;
+  --light-blue: #e6f0ff;     /* School Blue (Light Blue)  */
   --light-yellow: #fff8e1;
-  --text-dark: #222;
-  --text-light: #fff;
+  --text-dark: #222;  /* Black */
+  --text-light: #fff;  /* White */
 }
 
 * {
