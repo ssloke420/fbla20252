@@ -49,12 +49,13 @@ function addMessage(message, username) {
     // Add click event to message if admin
     if (isAdmin) {
         messageContainer.style.cursor = 'pointer';
-        messageContainer.onclick = function() {
+        messageContainer.addEventListener("click", function(e) {
+            e.stopPropagation();
             if (confirm('Are you sure you want to delete this message?')) {
                 messageContainer.remove();
                 saveMessages();
             }
-        };
+        });
     }
 
     messageContainer.appendChild(messageElement);
