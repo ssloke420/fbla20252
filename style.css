@@ -34,6 +34,7 @@ header h1 {
 
 nav {
   background-color: blue;
+  font-size: 15pt; 
 }
 
 nav ul {
@@ -48,7 +49,6 @@ nav a {
   color: var(--secondary-yellow);
   font-weight: bold;
   transition: color 0.2s ease;
-  font-size: 20px; 
 }
 
 nav a:hover {
