@@ -18,6 +18,25 @@ function removeUser(username) {
     updateUserList();
 }
 
+
+let bannedWords = [];
+
+fetch("bannedWords.json")
+  .then(response => response.json())
+  .then(data => {
+    bannedWords = data.bannedWords;
+  })
+  .catch(err => console.error("Failed to load banned words:", err));
+
+function censorText(text) {
+  let censored = text;
+
+  bannedWords.forEach(word => {
+    const regex = new RegExp(`\\b${word}\\b`, "gi");
+    const replacement = " ";
+    censored = censored.replace(regex, replacement);
+  });
+    
 function updateUserList() {
     const userList = document.getElementById('userList');
     userList.innerHTML = '<strong>Active Users:</strong><br>' + Array.from(activeUsers).join('<br>');
