@@ -22,7 +22,7 @@ function removeUser(username) {
 }
 
 // Fetch bad words from JSON
-fetch("extras/badwords.json")
+fetch("./extras/badwords.json")
   .then(response => response.json())
   .then(data => {
       bannedWords = data.words || [];
