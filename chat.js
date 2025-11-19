@@ -1,13 +1,16 @@
 let activeUsers = new Set();
 let typingTimeout;
 let isAdmin = false;
+let bannedWords = [];
 
+// Check if user is admin
 function checkAdmin() {
     if (sessionStorage.getItem("isAdmin") === "true") {
         isAdmin = true;
     }
 }
 
+// Add and remove users
 function addUser(username) {
     activeUsers.add(username);
     updateUserList();
@@ -18,30 +21,29 @@ function removeUser(username) {
     updateUserList();
 }
 
-
-let bannedWords = [];
-
-fetch("bannedWords.json")
+// Fetch bad words from JSON
+fetch("badwords.json")
   .then(response => response.json())
   .then(data => {
-    bannedWords = data.bannedWords;
+      bannedWords = data.words || [];
   })
-  .catch(err => console.error("Failed to load banned words:", err));
+  .catch(err => console.error("Failed to load bad words:", err));
 
-function censorText(text) {
-  let censored = text;
+// Check if text contains any banned word
+function containsBadWord(text) {
+    return bannedWords.some(word => {
+        const regex = new RegExp(`\\b${word}\\b`, "i");
+        return regex.test(text);
+    });
+}
 
-  bannedWords.forEach(word => {
-    const regex = new RegExp(`\\b${word}\\b`, "gi");
-    const replacement = " ";
-    censored = censored.replace(regex, replacement);
-  });
-    
+// Update active users list
 function updateUserList() {
     const userList = document.getElementById('userList');
     userList.innerHTML = '<strong>Active Users:</strong><br>' + Array.from(activeUsers).join('<br>');
 }
 
+// Show typing indicator
 function showTypingIndicator(username) {
     const typingIndicator = document.getElementById('typingIndicator');
     typingIndicator.textContent = `${username} is typing...`;
@@ -51,21 +53,27 @@ function showTypingIndicator(username) {
     }, 3000);
 }
 
+// Check if URL is an image
+function isImageURL(url) {
+    return url.match(/\.(jpeg|jpg|gif|png)$/) != null;
+}
+
+// Add message to chat
 function addMessage(message, username) {
     const chatMessages = document.getElementById('messages');
     const timestamp = new Date().toLocaleTimeString();
-
     const messageContainer = document.createElement('div');
     messageContainer.classList.add('message-container');
 
     const messageElement = document.createElement('p');
+
     if (isImageURL(message)) {
         messageElement.innerHTML = `[${timestamp}] <b>${username}</b>:<br><img src="${message}" style="max-width: 100%; max-height: 200px;">`;
     } else {
-        messageElement.innerHTML = `[${timestamp}] <b>${username}</b>: ${message}`;
+        messageElement.textContent = `[${timestamp}] ${username}: ${message}`;
     }
-    
-    // Add click event to message if admin
+
+    // Admin delete feature
     if (isAdmin) {
         messageContainer.style.cursor = 'pointer';
         messageContainer.addEventListener("click", function(e) {
@@ -83,10 +91,7 @@ function addMessage(message, username) {
     saveMessages();
 }
 
-function isImageURL(url) {
-    return url.match(/\.(jpeg|jpg|gif|png)$/) != null;
-}
-
+// Save and load messages
 function saveMessages() {
     const chatMessages = document.getElementById('messages');
     const messages = Array.from(chatMessages.children).map(child => child.innerHTML);
@@ -101,8 +106,7 @@ function loadMessages() {
         const messageContainer = document.createElement('div');
         messageContainer.classList.add('message-container');
         messageContainer.innerHTML = messageHTML;
-        
-        // Re-attach click handler for admin
+
         if (isAdmin) {
             messageContainer.style.cursor = 'pointer';
             messageContainer.addEventListener("click", function(e) {
@@ -113,11 +117,12 @@ function loadMessages() {
                 }
             });
         }
-        
+
         chatMessages.appendChild(messageContainer);
     });
 }
 
+// Reset messages every hour
 function resetMessages() {
     const now = new Date().getTime();
     const lastReset = localStorage.getItem('lastReset') || 0;
@@ -129,44 +134,53 @@ function resetMessages() {
     }
 }
 
+// Event listeners
 document.addEventListener('DOMContentLoaded', () => {
     checkAdmin();
     loadMessages();
     resetMessages();
     setInterval(resetMessages, 60 * 60 * 1000);
-    
-    document.getElementById('chat').addEventListener('keydown', function(event) {
+
+    const chatInput = document.getElementById('chat');
+    const usernameInput = document.getElementById('username');
+
+    chatInput.addEventListener('keydown', function(event) {
+        const username = usernameInput.value.trim();
         if (event.key === 'Enter') {
-            const message = document.getElementById('chat').value.trim();
-            const username = document.getElementById('username').value.trim();
-            if (message && username) {
-                if (isAdmin && message.startsWith('/ban ')) {
-                    const userToBan = message.substring(5).trim();
-                    activeUsers.delete(userToBan);
-                    updateUserList();
-                    addMessage(`User '${userToBan}' has been banned by Admin.`, 'Admin');
-                } else {
-                    addMessage(message, username);
-                }
-                document.getElementById('chat').value = '';
-            } else {
+            const message = chatInput.value.trim();
+            if (!message || !username) {
                 alert("Please enter both your name and a message.");
+                return;
             }
+
+            // Prevent sending if bad word exists
+            if (containsBadWord(message)) {
+                alert("Your message contains inappropriate words and cannot be sent.");
+                return;
+            }
+
+            if (isAdmin && message.startsWith('/ban ')) {
+                const userToBan = message.substring(5).trim();
+                activeUsers.delete(userToBan);
+                updateUserList();
+                addMessage(`User '${userToBan}' has been banned by Admin.`, 'Admin');
+            } else {
+                addMessage(message, username);
+            }
+
+            chatInput.value = '';
         } else {
-            const username = document.getElementById('username').value.trim();
             if (username) showTypingIndicator(username);
         }
     });
 
-    document.getElementById('username').addEventListener('blur', function() {
-        const username = document.getElementById('username').value.trim();
-        if (username) {
-            addUser(username);
-        }
+    usernameInput.addEventListener('blur', function() {
+        const username = usernameInput.value.trim();
+        if (username) addUser(username);
     });
 
-    document.getElementById('username').addEventListener('focus', function() {
-        const username = document.getElementById('username').value.trim();
+    usernameInput.addEventListener('focus', function() {
+        const username = usernameInput.value.trim();
         if (username) removeUser(username);
     });
 });
