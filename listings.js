@@ -1,6 +1,31 @@
+// --------------------------
+// GLOBAL VARIABLES
+// --------------------------
+let bannedWords = [];
+
 const form = document.getElementById("item-form");
 const submitBtn = document.getElementById("form-submit");
 const table = document.getElementById("item-table");
+
+// --------------------------
+// LOAD BAD WORDS ON STARTUP
+// --------------------------
+fetch("./extras/badwords.json")
+  .then(response => response.json())
+  .then(data => {
+    bannedWords = data.words || [];
+  })
+  .catch(err => console.error("Failed to load bad words:", err));
+
+// --------------------------
+// CHECK FOR BAD WORDS
+// --------------------------
+function containsBadWord(text) {
+  return bannedWords.some(word => {
+    const regex = new RegExp(`\\b${word}\\b`, "i");
+    return regex.test(text);
+  });
+}
 
 // --------------------------
 // LOAD SAVED ITEMS ON START
@@ -22,16 +47,19 @@ submitBtn.addEventListener("click", async (e) => {
   const location = document.getElementById("item-location").value.trim();
   const type = document.getElementById("item-type").value;
 
-  if (containsBadWord(title) || containsBadWord(desc) || containsBadWord(location)) {
-      alert("Your lsting contains inappropriate words and cannot be sent.");
-      return;
-  }
-
+  // Validate required fields
   if (!title || !desc || !location) {
     alert("Please fill out all required fields.");
     return;
   }
 
+  // Check for inappropriate content
+  if (containsBadWord(title) || containsBadWord(desc) || containsBadWord(location)) {
+    alert("Your listing contains inappropriate words and cannot be submitted.");
+    return;
+  }
+
+  // Process image if provided
   let imageData = "";
   if (fileInput.files && fileInput.files[0]) {
     imageData = await toBase64(fileInput.files[0]);
@@ -50,8 +78,12 @@ submitBtn.addEventListener("click", async (e) => {
   saveToLocalStorage(newItem);
 
   form.reset();
+  alert("Item successfully added to Lost & Found!");
 });
-// Convert image to Base64
+
+// --------------------------
+// CONVERT IMAGE TO BASE64
+// --------------------------
 function toBase64(file) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -79,6 +111,7 @@ function addRowToTable(item) {
   locationCell.textContent = item.location;
   typeCell.textContent = item.type;
 
+  // Display image or placeholder
   if (item.imageData) {
     const img = document.createElement("img");
     img.src = item.imageData;
@@ -88,27 +121,7 @@ function addRowToTable(item) {
     picCell.textContent = "No image";
   }
 
-
-  //---------------------PULL IN JSON FOR BADWORDS-----
-
-  fetch("./extras/badwords.json")
-  .then(response => response.json())
-  .then(data => {
-      bannedWords = data.words || [];
-  })
-  .catch(err => console.error("Failed to load bad words:", err));
-
-
-  //--------------------CHECK FOR BADWORDS------
-  
-  function containsBadWord(text) {
-    return bannedWords.some(word => {
-        const regex = new RegExp(`\\b${word}\\b`, "i");
-        return regex.test(text);
-    });
-}
-
-  // ------- DOUBLE CLICK DELETE (ADMIN ONLY) -------
+  // Admin delete functionality (single click)
   newRow.addEventListener("click", function (e) {
     e.stopPropagation();
     if (sessionStorage.getItem("isAdmin") === "true") {
@@ -139,4 +152,4 @@ function deleteItem(id) {
   localStorage.setItem("lostAndFoundItems", JSON.stringify(items));
 }
 
-// JEMMA JUNE NOVEMBER 25
+// JEMMA JUNE NOVEMBER 2025
