@@ -23,7 +23,7 @@ submitBtn.addEventListener("click", async (e) => {
   const type = document.getElementById("item-type").value;
 
   if (containsBadWord(title) || containsBadWord(desc) || containsBadWord(location)) {
-      alert("Your message contains inappropriate words and cannot be sent.");
+      alert("Your lsting contains inappropriate words and cannot be sent.");
       return;
   }
 
