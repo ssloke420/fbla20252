@@ -22,6 +22,11 @@ submitBtn.addEventListener("click", async (e) => {
   const location = document.getElementById("item-location").value.trim();
   const type = document.getElementById("item-type").value;
 
+  if (containsBadWord(message)) {
+      alert("Your message contains inappropriate words and cannot be sent.");
+      return;
+  }
+
   if (!title || !desc || !location) {
     alert("Please fill out all required fields.");
     return;
@@ -82,6 +87,26 @@ function addRowToTable(item) {
   } else {
     picCell.textContent = "No image";
   }
+
+
+  //---------------------PULL IN JSON FOR BADWORDS-----
+
+  fetch("./extras/badwords.json")
+  .then(response => response.json())
+  .then(data => {
+      bannedWords = data.words || [];
+  })
+  .catch(err => console.error("Failed to load bad words:", err));
+
+
+  //--------------------CHECK FOR BADWORDS------
+  
+  function containsBadWord(text) {
+    return bannedWords.some(word => {
+        const regex = new RegExp(`\\b${word}\\b`, "i");
+        return regex.test(text);
+    });
+}
 
   // ------- DOUBLE CLICK DELETE (ADMIN ONLY) -------
   newRow.addEventListener("click", function (e) {
