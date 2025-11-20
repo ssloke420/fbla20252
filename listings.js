@@ -78,7 +78,7 @@ submitBtn.addEventListener("click", async (e) => {
   saveToLocalStorage(newItem);
 
   form.reset();
-  alert("Item successfully added to Lost & Found!");
+
 });
 
 // --------------------------
