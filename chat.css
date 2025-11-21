@@ -17,13 +17,6 @@
             text-align: center;
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
-        cite {
-            display: block;
-            text-align: center;
-            font-size: 10px;
-            color: #666;
-            margin-top: 5px;
-        }
 
         hr {
             border: 0;
