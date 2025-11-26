@@ -1,31 +1,38 @@
-/* Style for listings */  
-      form {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 15px;
-        margin: 20px auto;
-        float: left;
-        margin-left: 25px;
-      }
+.form-section {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 20px;
+}
 
-      form label,
-      form input,
-      form select {
-        display: block;
-        width: 100%;
-      }
+#item-form {
+  flex: 1;
+  min-width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* adds spacing between inputs */
+}
 
-      #form-submit {
-        position: absolute;
-        top: 26%;
-        right: 10%;
-      }
+#item-form label {
+  font-weight: bold;
+}
 
+#form-submit {
+  width: fit-content;
+  padding: 6px 12px;
+}
 
+.form-image {
+  width: 250px;
+  height: 250px;
+  object-fit: contain; /* prevents distortion */
+  flex-shrink: 0;
+}
 
-      img.preview {
-        width: 100px;
-        height: auto;
-      }
+img.preview {
+  width: 100px;
+  height: auto;
+}
 
 
