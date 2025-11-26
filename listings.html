@@ -21,25 +21,30 @@
       </ul>
     </nav>
     
-    <div style="display: flex; flex-wrap: wrap; align-items: flex-start; gap: 20px; padding: 20px;">
-      <form id="item-form" style="flex: 1; min-width: 300px;">
+    <div class="form-section">
+      <form id="item-form">
         <label>Item Title:</label>
         <input type="text" id="item-title">
+    
         <label>Item Description:</label>
         <input type="text" id="item-desc">
+    
         <label>Picture (Clearly show item, should be easily distinguishable):</label>
         <input type="file" id="item-pic">
+    
         <label>Where to Find (Contact Information, Location, etc.):</label>
         <input type="text" id="item-location">
+    
         <label>Type of Post:</label>
         <select id="item-type">
           <option value="I found this">I found this</option>
           <option value="I am looking for this">I am looking for this</option>
         </select>
-        <button id="form-submit" style="margin-top: 10px;">Submit</button>
+    
+        <button id="form-submit" type="button">Submit</button>
       </form>
-      
-      <img style="width: 250px; height: 250px; flex-shrink: 0;" src="images/lostandfound.png" alt="Lost and Found" />
+    
+      <img class="form-image" src="images/lostandfound.png" alt="Lost and Found">
     </div>
 
     <table id="item-table" style="margin: 10px;">
@@ -57,6 +62,7 @@
 </html>
 
 <!-- SHLIKA SHAVAN -->
+
 
 
 
