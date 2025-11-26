@@ -111,3 +111,10 @@
 .delete-btn:hover {
     background-color: #ffcc00;
 }
+
+/* Hide decorative speech bubbles on mobile devices */
+@media (max-width: 768px) {
+    img[src*="speechbubble"] {
+        display: none;
+    }
+}
