@@ -49,6 +49,7 @@ nav a {
   color: var(--text-light);
   font-weight: bold;
   transition: color 0.2s ease;
+  padding-right: 7px;
 }
 
 nav a:hover {
