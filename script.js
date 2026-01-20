@@ -6,15 +6,15 @@ let submit = function() {
     if (entered === "rhhs@2025") {
         sessionStorage.setItem("isAdmin", "true");
         document.getElementById("verify").innerHTML = "Login successful!";
+        showAdmin();
     } else {
         document.getElementById("verify").innerHTML = "Incorrect Password";
     }
 };
 
-test = function () {
-    
+showAdmin = function () {
          if (sessionStorage.getItem("isAdmin", "true")) {
-            document.getElementById("test").innerHTML = "is admin"
+            document.getElementById("header").innerHTML = "RHHS Lost and Found Website - Admin View"
         };
 };
 
