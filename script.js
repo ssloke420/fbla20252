@@ -13,7 +13,7 @@ let submit = function() {
 };
 
 showAdmin = function () {
-         if (sessionStorage.getItem("isAdmin", "true")) {
+         if (sessionStorage.getItem("isAdmin") === "true") {
             document.getElementById("header").innerHTML = "RHHS Lost and Found Website - Admin View"
         };
 };
