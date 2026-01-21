@@ -6,6 +6,7 @@ let bannedWords = [];
 const form = document.getElementById("item-form");
 const submitBtn = document.getElementById("form-submit");
 const table = document.getElementById("item-table");
+const searchInput = document.getElementById("search-input");
 
 // --------------------------
 // LOAD BAD WORDS ON STARTUP
@@ -36,6 +37,20 @@ window.onload = function () {
 };
 
 // --------------------------
+// SEARCH FUNCTIONALITY (added)
+// --------------------------
+searchInput.addEventListener("input", function () {
+  const query = searchInput.value.toLowerCase();
+  const rows = table.querySelectorAll("tr");
+
+  rows.forEach((row, index) => {
+    if (index === 0) return; // skip header
+    const rowText = row.textContent.toLowerCase();
+    row.style.display = rowText.includes(query) ? "" : "none";
+  });
+});
+
+// --------------------------
 // SUBMIT FORM
 // --------------------------
 submitBtn.addEventListener("click", async (e) => {
@@ -47,19 +62,16 @@ submitBtn.addEventListener("click", async (e) => {
   const location = document.getElementById("item-location").value.trim();
   const type = document.getElementById("item-type").value;
 
-  // Validate required fields
   if (!title || !desc || !location) {
     alert("Please fill out all required fields.");
     return;
   }
 
-  // Check for inappropriate content
   if (containsBadWord(title) || containsBadWord(desc) || containsBadWord(location)) {
     alert("Your listing contains inappropriate words and cannot be submitted.");
     return;
   }
 
-  // Process image if provided
   let imageData = "";
   if (fileInput.files && fileInput.files[0]) {
     imageData = await toBase64(fileInput.files[0]);
@@ -76,9 +88,7 @@ submitBtn.addEventListener("click", async (e) => {
 
   addRowToTable(newItem);
   saveToLocalStorage(newItem);
-
   form.reset();
-
 });
 
 // --------------------------
@@ -111,7 +121,6 @@ function addRowToTable(item) {
   locationCell.textContent = item.location;
   typeCell.textContent = item.type;
 
-  // Display image or placeholder
   if (item.imageData) {
     const img = document.createElement("img");
     img.src = item.imageData;
@@ -121,7 +130,6 @@ function addRowToTable(item) {
     picCell.textContent = "No image";
   }
 
-  // Admin delete functionality (single click)
   newRow.addEventListener("click", function (e) {
     e.stopPropagation();
     if (sessionStorage.getItem("isAdmin") === "true") {
@@ -153,4 +161,3 @@ function deleteItem(id) {
 }
 
 // JEMMA JUNE NOVEMBER 2025
-  
