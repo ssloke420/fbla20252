@@ -34,21 +34,18 @@ function containsBadWord(text) {
 window.onload = function () {
   const savedItems = JSON.parse(localStorage.getItem("lostAndFoundItems")) || [];
   savedItems.forEach(item => addRowToTable(item));
+  searchInput.addEventListener("input", function () {
+    const query = searchInput.value.toLowerCase();
+    const rows = table.querySelectorAll("tr");
+
+    rows.forEach((row, index) => {
+      if (index === 0) return; // skip header
+      const rowText = row.textContent.toLowerCase();
+      row.style.display = rowText.includes(query) ? "" : "none";
+    });
+  });
 };
 
-// --------------------------
-// SEARCH FUNCTIONALITY (added)
-// --------------------------
-searchInput.addEventListener("input", function () {
-  const query = searchInput.value.toLowerCase();
-  const rows = table.querySelectorAll("tr");
-
-  rows.forEach((row, index) => {
-    if (index === 0) return; // skip header
-    const rowText = row.textContent.toLowerCase();
-    row.style.display = rowText.includes(query) ? "" : "none";
-  });
-});
 
 // --------------------------
 // SUBMIT FORM
