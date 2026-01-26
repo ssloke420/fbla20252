@@ -1,6 +1,4 @@
-// --------------------------
-// GLOBAL VARIABLES
-// --------------------------
+
 let bannedWords = [];
 
 const form = document.getElementById("item-form");
@@ -8,19 +6,14 @@ const submitBtn = document.getElementById("form-submit");
 const table = document.getElementById("item-table");
 const searchInput = document.getElementById("search-input");
 
-// --------------------------
-// LOAD BAD WORDS ON STARTUP
-// --------------------------
+
 fetch("./extras/badwords.json")
   .then(response => response.json())
   .then(data => {
     bannedWords = data.words || [];
   })
-  .catch(err => console.error("Failed to load bad words:", err));
+  .catch(err => console.error("Failed to load words:", err));
 
-// --------------------------
-// CHECK FOR BAD WORDS
-// --------------------------
 function containsBadWord(text) {
   return bannedWords.some(word => {
     const regex = new RegExp(`\\b${word}\\b`, "i");
@@ -28,18 +21,11 @@ function containsBadWord(text) {
   });
 }
 
-// --------------------------
-// LOAD SAVED ITEMS ON START
-// --------------------------
 window.onload = function () {
   const savedItems = JSON.parse(localStorage.getItem("lostAndFoundItems")) || [];
   savedItems.forEach(item => addRowToTable(item));
 };
 
-
-// --------------------------
-// SUBMIT FORM
-// --------------------------
 submitBtn.addEventListener("click", async (e) => {
   e.preventDefault();
 
@@ -78,9 +64,6 @@ submitBtn.addEventListener("click", async (e) => {
   form.reset();
 });
 
-// --------------------------
-// CONVERT IMAGE TO BASE64
-// --------------------------
 function toBase64(file) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -90,9 +73,6 @@ function toBase64(file) {
   });
 }
 
-// --------------------------
-// ADD ROW TO TABLE
-// --------------------------
 function addRowToTable(item) {
   const newRow = table.insertRow(-1);
   newRow.dataset.id = item.id;
@@ -129,18 +109,12 @@ function addRowToTable(item) {
   });
 }
 
-// --------------------------
-// SAVE TO LOCAL STORAGE
-// --------------------------
 function saveToLocalStorage(item) {
   const existingItems = JSON.parse(localStorage.getItem("lostAndFoundItems")) || [];
   existingItems.push(item);
   localStorage.setItem("lostAndFoundItems", JSON.stringify(existingItems));
 }
 
-// --------------------------
-// DELETE FROM LOCAL STORAGE
-// --------------------------
 function deleteItem(id) {
   let items = JSON.parse(localStorage.getItem("lostAndFoundItems")) || [];
   items = items.filter(item => item.id !== id);
