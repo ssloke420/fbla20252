@@ -6,12 +6,6 @@
   padding: 20px;
 }
 
-.#item-form.hidden {
-  visibility: hidden;
-  pointer-events: none;
-  position: absolute;
-}
-
 #item-form {
   flex: 1;
   min-width: 300px;
@@ -23,6 +17,13 @@
 #item-form label {
   font-weight: bold;
 }
+
+.#item-form.hidden {
+  visibility: hidden;
+  pointer-events: none;
+  position: absolute;
+}
+
 
 #form-submit {
   width: fit-content;
