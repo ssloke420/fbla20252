@@ -27,7 +27,7 @@ window.onload = function () {
 };
 
 window.formToggle = function() {
-  document.getElementById("item-form").classList.toggle("hidden");
+  document.querySelector(".form-section").classList.toggle("hidden");
 };
 
 submitBtn.addEventListener("click", async (e) => {
