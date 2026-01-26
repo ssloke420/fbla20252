@@ -27,13 +27,8 @@ window.onload = function () {
 };
 
 window.formToggle = function() {
-  let form = document.getElementById("item-form");
-  if (getComputedStyle(form).display !== "none") {
-    form.style.display = "none";
-  } else {
-    form.style.display = "flex";
-  }
-}
+  document.querySelector(".form-section").classList.toggle("hidden");
+};
 
 submitBtn.addEventListener("click", async (e) => {
   e.preventDefault();
