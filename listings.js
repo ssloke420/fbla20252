@@ -4,7 +4,7 @@ let bannedWords = [];
 const form = document.getElementById("item-form");
 const submitBtn = document.getElementById("form-submit");
 const table = document.getElementById("item-table");
-const searchInput = document.getElementById("search-input");
+const searchInput = document.getElementById("searchbar");
 
 
 fetch("./extras/badwords.json")
@@ -120,5 +120,33 @@ function deleteItem(id) {
   items = items.filter(item => item.id !== id);
   localStorage.setItem("lostAndFoundItems", JSON.stringify(items));
 }
+
+searchInput.addEventListener("keyup", function() {
+  const filter = searchInput.value.toLowerCase();
+  const rows = table.getElementsByTagName("tr");
+  for (let i = 1; i < rows.length; i++) {
+    const titleCell = rows[i].getElementsByTagName("td")[0];
+    const descCell = rows[i].getElementsByTagName("td")[1];
+    const locationCell = rows[i].getElementsByTagName("td")[3];
+
+    if (titleCell && descCell && locationCell) {
+      const titleText = titleCell.textContent || titleCell.innerText;
+      const descText = descCell.textContent || descCell.innerText;
+      const locationText = locationCell.textContent || locationCell.innerText;
+
+      if (
+        titleText.toLowerCase().indexOf(filter) > -1 || 
+        descText.toLowerCase().indexOf(filter) > -1 || 
+        locationText.toLowerCase().indexOf(filter) > -1
+      ) {
+        // If match found, show the row
+        rows[i].style.display = "";
+      } else {
+        // If no match, hide the row
+        rows[i].style.display = "none";
+      }
+    }
+  }
+});
 
 // JEMMA JUNE NOVEMBER 2025
