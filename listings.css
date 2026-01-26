@@ -18,7 +18,7 @@
   font-weight: bold;
 }
 
-#item-form.hidden {
+.form-section.hidden {
   visibility: hidden;
   pointer-events: none;
   position: absolute;
