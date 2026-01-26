@@ -153,4 +153,3 @@ searchInput.addEventListener("keyup", function() {
   }
 });
 
-// JEMMA JUNE NOVEMBER 2025
