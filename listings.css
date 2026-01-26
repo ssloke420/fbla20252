@@ -6,7 +6,7 @@
   padding: 20px;
 }
 
-.form-section.hidden {
+.#item-form.hidden {
   visibility: hidden;
   pointer-events: none;
   position: absolute;
