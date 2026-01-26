@@ -31,7 +31,7 @@ window.formToggle = function() {
   if (getComputedStyle(form).display !== "none") {
     form.style.display = "none";
   } else {
-    form.style.display = "block";
+    form.style.display = "revert";
   }
 }
 
