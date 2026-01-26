@@ -1,41 +1,9 @@
 .form-section {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between; /* Pushes image to the right */
   align-items: flex-start;
-  gap: 40px; /* More breathing room between form and image */
-  padding: 40px;
-  background-color: #f9f9f9; /* Subtle background for the 'Create' area */
-}
-
-.form-container {
-  flex: 1;
-  min-width: 300px;
-}
-
-.section-divider {
-  border: 0;
-  height: 1px;
-  background: #ccc;
-  margin: 0;
-}
-
-#searchbar {
-  width: 100%;
-  padding: 12px;
-  font-size: 16px;
-  border: 2px solid #ddd;
-  border-radius: 5px;
-  box-sizing: border-box; /* Ensures padding doesn't break width */
-}
-
-.search-container {
-  margin-bottom: 20px;
-}
-
-.browse-section {
-  padding: 40px;
-  background-color: #ffffff;
+  gap: 20px;
+  padding: 20px;
 }
 
 #item-form {
@@ -56,18 +24,6 @@
   margin-top: 7px;
 }
 
-#item-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 10px;
-}
-
-#item-table th, #item-table td {
-  padding: 12px;
-  text-align: left;
-  border-bottom: 1px solid #ddd;
-}
-
 .form-image {
   width: 250px;
   height: 250px;
@@ -79,4 +35,3 @@ img.preview {
   width: 100px;
   height: auto;
 }
-
