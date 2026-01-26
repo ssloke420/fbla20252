@@ -149,4 +149,14 @@ searchInput.addEventListener("keyup", function() {
   }
 });
 
+function formToggle() {
+  let form = document.querySelector(".form-section");
+
+  if (getComputedStyle(form).display !== "none") {
+    form.style.display = "none";
+  } else {
+    form.style.display = "block";
+  }
+}
+
 // JEMMA JUNE NOVEMBER 2025
