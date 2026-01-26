@@ -26,6 +26,15 @@ window.onload = function () {
   savedItems.forEach(item => addRowToTable(item));
 };
 
+window.formToggle = function() {
+  let form = document.getElementById("item-form");
+  if (getComputedStyle(form).display !== "none") {
+    form.style.display = "none";
+  } else {
+    form.style.display = "block";
+  }
+}
+
 submitBtn.addEventListener("click", async (e) => {
   e.preventDefault();
 
@@ -148,15 +157,5 @@ searchInput.addEventListener("keyup", function() {
     }
   }
 });
-
-function formToggle() {
-  let form = document.querySelector(".form-section");
-
-  if (getComputedStyle(form).display !== "none") {
-    form.style.display = "none";
-  } else {
-    form.style.display = "block";
-  }
-}
 
 // JEMMA JUNE NOVEMBER 2025
