@@ -42,3 +42,7 @@ img.preview {
   width: 100px;
   height: auto;
 }
+
+body {
+  overflow-x: hidden; 
+}
