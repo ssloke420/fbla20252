@@ -27,7 +27,10 @@ window.onload = function () {
 };
 
 window.formToggle = function() {
-  document.querySelector(".form-section").classList.toggle("hidden");
+  // document.querySelector(".form-section").classList.toggle("hidden");
+  const btn = document.getElementById("toggle");
+  const isHidden = document.querySelector(".form-section").classList.toggle("hidden");
+  btn.textContent = isHidden ? "Show Form" : "Hide Form";
 };
 
 submitBtn.addEventListener("click", async (e) => {
