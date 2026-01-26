@@ -11,7 +11,7 @@
   min-width: 300px;
   display: flex;
   flex-direction: column;
-  gap: 10px; /* adds spacing between inputs */
+  gap: 10px; 
 }
 
 #item-form label {
