@@ -61,7 +61,7 @@ function isImageURL(url) {
 // Add message to chat
 function addMessage(message, username) {
     const chatMessages = document.getElementById('messages');
-    const timestamp = new Date().toLocaleTimeString();
+    const timestamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
     const messageContainer = document.createElement('div');
     messageContainer.classList.add('message-container');
 
